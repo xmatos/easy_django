@@ -1,0 +1,17 @@
+{% load easy_django_extras %}
+{% get_models as models %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Easy Django - Index</title>
+  </head>
+  <body>
+    <ul>
+      {% for model in models %}
+      <li>
+        <a href="{% url model.model|add:'_list' %}">{{ model.model }}</a>
+      </li>
+      {% endfor %}
+      </ul>
+  </body>
+</html>

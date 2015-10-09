@@ -1,0 +1,20 @@
+{% load easy_django_extras %}
+{% get_model_options object as options %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Easy Django - {{ options.model_name|capfirst }} Details</title>
+  </head>
+  <body>
+    <a href="{% url options.model_name|add:'_edit' object.pk %}">edit</a>
+    <a href="{% url options.model_name|add:'_delete' object.pk %}">delete</a>
+    <h3>Details</h3>
+    <dl>
+      {% for field in options.fields %}
+      <dt>{{ field.name }}</dt>
+      <dd>{% get_field_value object field %}</dd>
+      {% endfor %}
+    </dl>
+  </body>
+</html>

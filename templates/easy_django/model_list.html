@@ -1,0 +1,57 @@
+{% load easy_django_extras %}
+{% get_list_options object_list as options %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Easy Django - {{ options.model_name|capfirst }}</title>
+  </head>
+  <body>
+    <a href="{% url options.model_name|add:'_add' %}">Add</a>
+
+    {% if object_list.count > 0 %}
+
+    <table>
+      <thead>
+        <tr>
+          {% for field in options.fields %}
+          <th>
+            {{ field.name }}
+          </th>
+          {% endfor %}
+          <th>details</th>
+          <th>edit</th>
+          <th>delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in object_list %}
+        <tr>
+          {% for field in options.fields %}
+          <td>
+            {% get_field_value obj field %}
+          </td>
+          {% endfor %}
+          <td>
+            <a href="{% url options.model_name|add:'_detail' obj.pk %}">details</a>
+          </td>
+          <td>
+            <a href="{% url options.model_name|add:'_edit' obj.pk %}">edit</a>
+          </td>
+          <td>
+            <a href="{% url options.model_name|add:'_delete' obj.pk %}">delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% else %}
+
+    <p>
+      No records yet.
+    </p>
+
+    {% endif %}
+  </body>
+</html>
